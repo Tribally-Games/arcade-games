@@ -1,0 +1,63 @@
+name: Deploy Game
+
+on:
+  repository_dispatch:
+    types: [deploy-game]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Download and extract game.zip
+        uses: robinraju/release-downloader@v1
+        with:
+          repository: ${{ github.event.client_payload.repository }}
+          tag: ${{ github.event.client_payload.version }}
+          fileName: ${{ github.event.client_payload.asset_name }}
+          extract: true
+          out-file-path: './${{ github.event.client_payload.folder_name }}'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Clean existing folder
+        run: |
+          FOLDER_NAME="${{ github.event.client_payload.folder_name }}"
+          if [ -d "./${FOLDER_NAME}" ]; then
+            rm -rf "./${FOLDER_NAME}"
+            echo "Removed existing ${FOLDER_NAME} folder"
+          else
+            echo "No existing ${FOLDER_NAME} folder to remove"
+          fi
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push changes
+        run: |
+          git add ${{ github.event.client_payload.folder_name }}/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Deploy ${{ github.event.client_payload.folder_name }} v${{ github.event.client_payload.version }}
+
+            Auto-deployed from ${{ github.event.client_payload.repository }} release
+            Release URL: https://github.com/${{ github.event.client_payload.repository }}/releases/tag/${{ github.event.client_payload.version }}"
+            git push
+            echo "✅ Successfully deployed ${{ github.event.client_payload.folder_name }} v${{ github.event.client_payload.version }}"
+          fi
+
+      - name: Create deployment summary
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version**: ${{ github.event.client_payload.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Source**: ${{ github.event.client_payload.repository }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Target**: ${{ github.event.client_payload.folder_name }}/ folder" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: Completed successfully ✅" >> $GITHUB_STEP_SUMMARY
