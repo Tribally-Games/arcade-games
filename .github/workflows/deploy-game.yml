@@ -34,14 +34,15 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: Clean existing folder
+      - name: Clean existing version folder
         run: |
           FOLDER_NAME="${{ github.event.client_payload.folder_name || inputs.folder_name }}"
-          if [ -d "./${FOLDER_NAME}" ]; then
-            rm -rf "./${FOLDER_NAME}"
-            echo "Removed existing ${FOLDER_NAME} folder"
+          VERSION="${{ github.event.client_payload.version || inputs.version }}"
+          if [ -d "./${FOLDER_NAME}/${VERSION}" ]; then
+            rm -rf "./${FOLDER_NAME}/${VERSION}"
+            echo "Removed existing ${FOLDER_NAME}/${VERSION} folder"
           else
-            echo "No existing ${FOLDER_NAME} folder to remove"
+            echo "No existing ${FOLDER_NAME}/${VERSION} folder to remove"
           fi
 
       - name: Download and extract release asset
@@ -73,24 +74,29 @@ jobs:
             "${ASSET_URL}"
           
           # Create target directory
-          mkdir -p "${FOLDER_NAME}"
-          
+          mkdir -p "${FOLDER_NAME}/${VERSION}"
+
           # Extract the asset
-          echo "Extracting ${ASSET_NAME} to ${FOLDER_NAME}/"
+          echo "Extracting ${ASSET_NAME} to ${FOLDER_NAME}/${VERSION}/"
           if [[ "${ASSET_NAME}" == *.zip ]]; then
-            unzip -q "${ASSET_NAME}" -d "${FOLDER_NAME}"
+            unzip -q "${ASSET_NAME}" -d "${FOLDER_NAME}/${VERSION}"
           elif [[ "${ASSET_NAME}" == *.tar.gz ]] || [[ "${ASSET_NAME}" == *.tgz ]]; then
-            tar -xzf "${ASSET_NAME}" -C "${FOLDER_NAME}"
+            tar -xzf "${ASSET_NAME}" -C "${FOLDER_NAME}/${VERSION}"
           elif [[ "${ASSET_NAME}" == *.tar ]]; then
-            tar -xf "${ASSET_NAME}" -C "${FOLDER_NAME}"
+            tar -xf "${ASSET_NAME}" -C "${FOLDER_NAME}/${VERSION}"
           else
             echo "Warning: Unknown archive format, copying as-is"
-            cp "${ASSET_NAME}" "${FOLDER_NAME}/"
+            cp "${ASSET_NAME}" "${FOLDER_NAME}/${VERSION}/"
           fi
           
           # Clean up downloaded file
           rm -f "${ASSET_NAME}"
-          
+
+          # Create version.txt file
+          mkdir -p "${FOLDER_NAME}"
+          echo "${VERSION}" > "${FOLDER_NAME}/version.txt"
+          echo "Created ${FOLDER_NAME}/version.txt with version ${VERSION}"
+
           echo "✅ Successfully downloaded and extracted ${ASSET_NAME}"
 
       - name: Configure Git
@@ -100,16 +106,18 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git add ${{ github.event.client_payload.folder_name || inputs.folder_name }}/
+          FOLDER_NAME="${{ github.event.client_payload.folder_name || inputs.folder_name }}"
+          VERSION="${{ github.event.client_payload.version || inputs.version }}"
+          git add "${FOLDER_NAME}/${VERSION}/" "${FOLDER_NAME}/version.txt"
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Deploy ${{ github.event.client_payload.folder_name || inputs.folder_name }} v${{ github.event.client_payload.version || inputs.version }}
+            git commit -m "Deploy ${FOLDER_NAME} v${VERSION}
 
             Auto-deployed from ${{ github.event.client_payload.repository || inputs.repository }} release
-            Release URL: https://github.com/${{ github.event.client_payload.repository || inputs.repository }}/releases/tag/${{ github.event.client_payload.version || inputs.version }}"
+            Release URL: https://github.com/${{ github.event.client_payload.repository || inputs.repository }}/releases/tag/${VERSION}"
             git push
-            echo "✅ Successfully deployed ${{ github.event.client_payload.folder_name || inputs.folder_name }} v${{ github.event.client_payload.version || inputs.version }}"
+            echo "✅ Successfully deployed ${FOLDER_NAME} v${VERSION}"
           fi
 
       - name: Create deployment summary
