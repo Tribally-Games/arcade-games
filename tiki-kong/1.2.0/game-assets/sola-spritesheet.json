@@ -1,0 +1,41 @@
+{
+  "frames": [
+    {
+      "filename": "idle-000",
+      "frame": { "x": 0, "y": 0, "w": 80, "h": 80 }
+    },
+    {
+      "filename": "idle-001",
+      "frame": { "x": 80, "y": 0, "w": 80, "h": 80 }
+    },
+    {
+      "filename": "idle-002",
+      "frame": { "x": 160, "y": 0, "w": 80, "h": 80 }
+    },
+    {
+      "filename": "idle-003",
+      "frame": { "x": 240, "y": 0, "w": 80, "h": 80 }
+    },
+    {
+      "filename": "attack-000",
+      "frame": { "x": 320, "y": 0, "w": 80, "h": 80 }
+    },
+    {
+      "filename": "attack-001",
+      "frame": { "x": 400, "y": 0, "w": 80, "h": 80 }
+    },
+    {
+      "filename": "attack-002",
+      "frame": { "x": 480, "y": 0, "w": 80, "h": 80 }
+    },
+    {
+      "filename": "attack-003",
+      "frame": { "x": 560, "y": 0, "w": 80, "h": 80 }
+    }
+  ],
+  "meta": {
+    "image": "sola-spritesheet.png",
+    "size": { "w": 640, "h": 80 },
+    "scale": 1
+  }
+}
