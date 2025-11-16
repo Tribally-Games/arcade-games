@@ -1,0 +1,40 @@
+{
+  "frames": {
+    "attack-000": {
+      "frame": { "x": 0, "y": 0, "w": 80, "h": 80 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 80 },
+      "sourceSize": { "w": 80, "h": 80 }
+    },
+    "attack-001": {
+      "frame": { "x": 80, "y": 0, "w": 80, "h": 80 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 80 },
+      "sourceSize": { "w": 80, "h": 80 }
+    },
+    "attack-002": {
+      "frame": { "x": 160, "y": 0, "w": 80, "h": 80 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 80 },
+      "sourceSize": { "w": 80, "h": 80 }
+    },
+    "attack-003": {
+      "frame": { "x": 240, "y": 0, "w": 80, "h": 80 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 80 },
+      "sourceSize": { "w": 80, "h": 80 }
+    }
+  },
+  "meta": {
+    "app": "https://www.leshylabs.com/apps/sstool/",
+    "version": "Leshy SpriteSheet Tool v0.8.4",
+    "image": "karm-minion.png",
+    "size": { "w": 320, "h": 80 },
+    "scale": 1
+  }
+}
+
