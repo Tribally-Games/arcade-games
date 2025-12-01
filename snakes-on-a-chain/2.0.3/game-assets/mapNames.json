@@ -1,0 +1,9 @@
+[
+  "base_map",
+  "immutable_map",
+  "moku_map",
+  "avalanche_map",
+  "pixel_cats_map",
+  "abstract_map",
+  "ronin_map"
+]
