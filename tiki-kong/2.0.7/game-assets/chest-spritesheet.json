@@ -1,0 +1,59 @@
+{
+  "frames": [
+    {
+      "filename": "idle-000",
+      "frame": { "x": 0, "y": 0, "w": 49, "h": 48 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 49, "h": 48 },
+      "sourceSize": { "w": 49, "h": 48 }
+    },
+    {
+      "filename": "idle-001",
+      "frame": { "x": 49, "y": 0, "w": 49, "h": 48 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 49, "h": 48 },
+      "sourceSize": { "w": 49, "h": 48 }
+    },
+    {
+      "filename": "idle-002",
+      "frame": { "x": 98, "y": 0, "w": 49, "h": 48 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 49, "h": 48 },
+      "sourceSize": { "w": 49, "h": 48 }
+    },
+    {
+      "filename": "idle-003",
+      "frame": { "x": 147, "y": 0, "w": 49, "h": 48 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 49, "h": 48 },
+      "sourceSize": { "w": 49, "h": 48 }
+    },
+    {
+      "filename": "idle-004",
+      "frame": { "x": 196, "y": 0, "w": 49, "h": 48 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 49, "h": 48 },
+      "sourceSize": { "w": 49, "h": 48 }
+    },
+    {
+      "filename": "idle-005",
+      "frame": { "x": 245, "y": 0, "w": 49, "h": 48 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 49, "h": 48 },
+      "sourceSize": { "w": 49, "h": 48 }
+    }
+  ],
+  "meta": {
+    "app": "https://www.leshylabs.com/apps/sstool/",
+    "version": "Leshy SpriteSheet Tool v0.8.4",
+    "image": "spritesheet.png",
+    "size": { "w": 294, "h": 48 },
+    "scale": 1
+  }
+}
